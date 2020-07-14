@@ -1,7 +1,7 @@
-package com.xiumei.tank;
+package com.xiumei.tank.abstractfactory;
 
-import com.xiumei.tank.abstractfactory.BaseBullet;
-import com.xiumei.tank.abstractfactory.BaseTank;
+import com.xiumei.tank.*;
+import com.xiumei.tank.Tank;
 
 import java.awt.*;
 
@@ -10,9 +10,9 @@ import java.awt.*;
  * @Email: yue_zhou@xinyan.com
  * @Date: 16:11 2020/7/12
  * @Version: 1.0
- * @Description: 子弹类
+ * @Description: 方的子弹类产品
  **/
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet {
 
     // 速度
     private static final int SPEED = 10;
@@ -30,9 +30,9 @@ public class Bullet extends BaseBullet {
     // 分组
     private Group group = Group.BAD;
     // TankFrame 引用
-    TankFrame tf;
+    public TankFrame tf;
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -45,6 +45,7 @@ public class Bullet extends BaseBullet {
         rect.height = HEIGHT;
 
         tf.bullets.add(this);
+
     }
 
     /**
@@ -56,22 +57,10 @@ public class Bullet extends BaseBullet {
             tf.bullets.remove(this);
             return;
         }
-        switch (dir) {
-            case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x, y , null);
-                break;
-            case UP:
-                g.drawImage(ResourceMgr.bulletU, x, y , null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x, y , null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x, y , null);
-                break;
-            default:
-                break;
-        }
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
+        g.fillRect(x, y, 20, 20);
+        g.setColor(c);
         move();
     }
     /**
@@ -135,4 +124,5 @@ public class Bullet extends BaseBullet {
     public void setGroup(Group group) {
         this.group = group;
     }
+
 }

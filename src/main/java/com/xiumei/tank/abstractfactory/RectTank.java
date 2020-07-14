@@ -1,6 +1,6 @@
-package com.xiumei.tank;
+package com.xiumei.tank.abstractfactory;
 
-import com.xiumei.tank.abstractfactory.BaseTank;
+import com.xiumei.tank.*;
 import com.xiumei.tank.util.FireStrategyUtil;
 
 import java.awt.*;
@@ -11,10 +11,10 @@ import java.util.Random;
  * @Email: yue_zhou@xinyan.com
  * @Date: 15:45 2020/7/12
  * @Version: 1.0
- * @Description: 坦克类
+ * @Description: 方形坦克类产品类
  **/
-public class Tank extends BaseTank {
-//    int x, y; // 坐标
+public class RectTank extends BaseTank {
+//    private int x, y; // 坐标
 //    Dir dir; // 移动方向
 //    private final static int SPEED = 10; // 坦克速度
 //    private boolean moving = true; // 是否移动
@@ -27,13 +27,13 @@ public class Tank extends BaseTank {
 //    TankFrame tf;
     private Random random = new Random();
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public RectTank(int x, int y, Dir dir, Group group, TankFrame tf) {
         super(x, y, dir, group, tf);
 //        super();
 //        this.x = x;
 //        this.y = y;
 //        this.dir = dir;
-//        super.group = group;
+//        this.group = group;
 //        this.tf = tf;
 //
 //        rect.x = this.x;
@@ -52,22 +52,11 @@ public class Tank extends BaseTank {
             tf.enemyTanks.remove(this);
             return;
         }
-        switch (dir) {
-            case LEFT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y , null);
-                break;
-            case UP:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y , null);
-                break;
-            case RIGHT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y , null);
-                break;
-            case DOWN:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y , null);
-                break;
-            default:
-                break;
-        }
+        // 方形坦克绘制
+        Color c = g.getColor();
+        g.setColor(group == Group.GOOD ? Color.RED : Color.BLUE);
+        g.fillRect(x, y, 40, 40);
+        g.setColor(c);
         move();
     }
 
@@ -113,8 +102,8 @@ public class Tank extends BaseTank {
     private void boundsCheck() {
         if(this.x < 0) x = 2;
         if(this.y < 30) y = 28;
-        if(this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
-        if(this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2;
+        if(this.x > TankFrame.GAME_WIDTH - RectTank.WIDTH - 2) x = TankFrame.GAME_WIDTH - RectTank.WIDTH - 2;
+        if(this.y > TankFrame.GAME_HEIGHT - RectTank.HEIGHT - 2) y = TankFrame.GAME_HEIGHT - RectTank.HEIGHT - 2;
     }
 
     /**

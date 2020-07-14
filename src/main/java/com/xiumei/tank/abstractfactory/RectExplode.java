@@ -1,17 +1,19 @@
-package com.xiumei.tank;
+package com.xiumei.tank.abstractfactory;
 
-import com.xiumei.tank.abstractfactory.BaseExplode;
+import com.xiumei.tank.Audio;
+import com.xiumei.tank.ResourceMgr;
+import com.xiumei.tank.TankFrame;
 
 import java.awt.*;
 
 /**
  * @Author: yue_zhou
  * @Email: yue_zhou@xinyan.com
- * @Date: 22:25 2020/7/12
+ * @Date: 14:20 2020/7/14
  * @Version: 1.0
- * @Description: 爆炸
+ * @Description:
  **/
-public class Explode extends BaseExplode {
+public class RectExplode extends BaseExplode {
 
     public static int WIDTH = ResourceMgr.explodes[0].getWidth(); // 爆炸图片宽度
     public static int HEIGHT = ResourceMgr.explodes[0].getHeight(); // 爆炸图片高度
@@ -20,7 +22,7 @@ public class Explode extends BaseExplode {
 
     private int step = 0; // 步骤
 
-    public Explode(int x, int y, TankFrame tf) {
+    public RectExplode(int x, int y, TankFrame tf) {
         super();
         this.x = x;
         this.y = y;
@@ -32,10 +34,17 @@ public class Explode extends BaseExplode {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(ResourceMgr.explodes[step++], x, y, null);
-        if(step >= ResourceMgr.explodes.length) {
+//        g.drawImage(ResourceMgr.explodes[step++], x, y, null);
+
+        Color c = g.getColor();
+        g.setColor(Color.RED);
+        g.fillRect(x, y, 10*step, 10*step);
+        step++;
+        g.setColor(c);
+
+        if(step >= 15) {
             tf.explodes.remove(this);
         }
-    }
 
+    }
 }

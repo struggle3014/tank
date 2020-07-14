@@ -1,5 +1,8 @@
 package com.xiumei.tank;
 
+import com.xiumei.tank.abstractfactory.*;
+import com.xiumei.tank.util.FireStrategyUtil;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -18,12 +21,13 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, this); // 坦克
-    List<Bullet> bullets = new ArrayList<>(); // 子弹容器
-    List<Tank> enemyTanks = new ArrayList<>(); // 敌方坦克容器
-    List<Explode> explodes = new ArrayList<>(); // 爆炸容器
-//    Explode e = new Explode(100, 100, this);
+    public List<BaseBullet> bullets = new ArrayList<>(); // 子弹容器
+    public List<BaseTank> enemyTanks = new ArrayList<>(); // 敌方坦克容器
+    public List<BaseExplode> explodes = new ArrayList<>(); // 爆炸容器
 
-    static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960; // 像素
+    public GameFactory gf = new RectFactory(); // 创建默认游戏工厂类
+
+    public static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960; // 像素
 
     public TankFrame() {
         this.setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -146,7 +150,7 @@ public class TankFrame extends Frame {
                     break;
                 // 按住 Ctrl 键，发出一颗子弹
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();
+                    myTank.fire(FireStrategyUtil.getGoodFireStrategy());
                     break;
                 default:
                     break;
