@@ -24,13 +24,15 @@ public class Tank {
     TankFrame tf;
     private Random random = new Random();
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    GameModel gm;
+
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tf;
+        this.gm = gm;
 
         rect.x = this.x;
         rect.y = this.y;
@@ -45,7 +47,7 @@ public class Tank {
     public void paint(Graphics g) {
         if(!living) {
             // 坦克处于未存活状态，将该坦克移除
-            tf.enemyTanks.remove(this);
+            gm.enemyTanks.remove(this);
             return;
         }
         switch (dir) {
@@ -164,7 +166,7 @@ public class Tank {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH /2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT /2;
 
-        tf.bullets.add(new Bullet(bX, bY ,this.dir, this.group, this.tf));
+        gm.bullets.add(new Bullet(bX, bY ,this.dir, this.group, gm));
     }
 
     /**

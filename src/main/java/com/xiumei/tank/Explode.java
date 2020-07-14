@@ -14,15 +14,15 @@ public class Explode {
     public static int WIDTH = ResourceMgr.explodes[0].getWidth(); // 爆炸图片宽度
     public static int HEIGHT = ResourceMgr.explodes[0].getHeight(); // 爆炸图片高度
     private int x, y; // 坐标
-    private TankFrame tf;
+    private GameModel gm;
 
     private int step = 0; // 步骤
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, GameModel tf) {
         super();
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = tf;
 
         new Thread(() -> new Audio("audio/explode.wav").play()).start();
     }
@@ -30,7 +30,7 @@ public class Explode {
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if(step >= ResourceMgr.explodes.length) {
-            tf.explodes.remove(this);
+            gm.explodes.remove(this);
         }
     }
 
