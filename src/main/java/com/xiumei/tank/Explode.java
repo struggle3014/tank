@@ -9,7 +9,7 @@ import java.awt.*;
  * @Version: 1.0
  * @Description:
  **/
-public class Explode {
+public class Explode extends GameObject {
 
     public static int WIDTH = ResourceMgr.explodes[0].getWidth(); // 爆炸图片宽度
     public static int HEIGHT = ResourceMgr.explodes[0].getHeight(); // 爆炸图片高度
@@ -30,7 +30,7 @@ public class Explode {
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if(step >= ResourceMgr.explodes.length) {
-            gm.explodes.remove(this);
+            gm.remove(this);
         }
     }
 

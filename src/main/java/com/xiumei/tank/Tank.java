@@ -10,15 +10,16 @@ import java.util.Random;
  * @Version: 1.0
  * @Description: 坦克类
  **/
-public class Tank {
+public class Tank extends GameObject {
     private int x, y; // 坐标
+    private int prevX, prevY; // 坦克上次坐标
     Dir dir; // 移动方向
     private final static int SPEED = 10; // 坦克速度
     private boolean moving = true; // 是否移动
     public final static int WIDTH = ResourceMgr.goodTankU.getWidth(); // 坦克宽度
     public final static int HEIGHT = ResourceMgr.goodTankU.getHeight(); // 坦克高度
     // 坦克 rect，用于后续碰撞检测
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
     private boolean living = true; // 坦克是否存活
     private Group group = Group.BAD; // 游戏分组
     TankFrame tf;
@@ -47,7 +48,7 @@ public class Tank {
     public void paint(Graphics g) {
         if(!living) {
             // 坦克处于未存活状态，将该坦克移除
-            gm.enemyTanks.remove(this);
+            gm.remove(this);
             return;
         }
         switch (dir) {
@@ -73,6 +74,8 @@ public class Tank {
      * 坦克移动方法
      */
     private void move() {
+        prevX = x;
+        prevY = y;
         if(!moving) {
             return;
         }
@@ -166,7 +169,14 @@ public class Tank {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH /2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT /2;
 
-        gm.bullets.add(new Bullet(bX, bY ,this.dir, this.group, gm));
+        gm.add(new Bullet(bX, bY ,this.dir, this.group, gm));
+    }
+
+    /**
+     * 将坦克停止
+     */
+    public void stop() {
+        moving = false;
     }
 
     /**
@@ -182,5 +192,21 @@ public class Tank {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public int getPrevX() {
+        return prevX;
+    }
+
+    public void setPrevX(int prevX) {
+        this.prevX = prevX;
+    }
+
+    public int getPrevY() {
+        return prevY;
+    }
+
+    public void setPrevY(int prevY) {
+        this.prevY = prevY;
     }
 }
