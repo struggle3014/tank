@@ -18,8 +18,6 @@ public class Bullet extends GameObject {
     public final static int HEIGHT = ResourceMgr.bulletU.getHeight();
     // 子弹 rect，用于后续碰撞检测
     public Rectangle rect = new Rectangle();
-    // 坐标
-    private int x, y;
     // 方向
     private Dir dir;
     // 子弹是否存活
@@ -36,6 +34,7 @@ public class Bullet extends GameObject {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+        GameModel.getInstance().add(this);
     }
 
     /**
@@ -65,6 +64,17 @@ public class Bullet extends GameObject {
         }
         move();
     }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
     /**
      * 移动方法
      */

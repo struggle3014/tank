@@ -13,11 +13,24 @@ import java.awt.*;
 public abstract class GameObject {
 
     // 坐标
-    int x, y;
+    public int x, y;
 
     /**
      * 画图
+     * @param g
      */
     public abstract void paint(Graphics g);
+
+    /**
+     * 获取宽度
+     * @return
+     */
+    public abstract int getWidth();
+
+    /**
+     * 获取宽度
+     * @return
+     */
+    public abstract int getHeight();
 
 }

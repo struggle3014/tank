@@ -33,4 +33,14 @@ public class Wall extends GameObject {
         g.fillRect(x, y, weight, height);
         g.setColor(c);
     }
+
+    @Override
+    public int getWidth() {
+        return this.weight;
+    }
+
+    @Override
+    public int getHeight() {
+        return this.height;
+    }
 }

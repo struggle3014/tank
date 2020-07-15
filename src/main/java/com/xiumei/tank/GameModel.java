@@ -1,9 +1,6 @@
 package com.xiumei.tank;
 
-import com.xiumei.tank.cor.BulletTankCollider;
-import com.xiumei.tank.cor.Collider;
-import com.xiumei.tank.cor.ColliderChain;
-import com.xiumei.tank.cor.TankTankCollider;
+import com.xiumei.tank.chainofresponsibility.ColliderChain;
 
 import java.awt.*;
 import java.util.ArrayList;

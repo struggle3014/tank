@@ -1,5 +1,11 @@
 package com.xiumei.tank;
 
+//import com.xiumei.tank.strategy.DefaultFireStrategy;
+//import com.xiumei.tank.strategy.FireStrategy;
+
+import com.xiumei.tank.strategy.DefaultFireStrategy;
+import com.xiumei.tank.strategy.FireStrategy;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -11,9 +17,8 @@ import java.util.Random;
  * @Description: 坦克类
  **/
 public class Tank extends GameObject {
-    private int x, y; // 坐标
     private int prevX, prevY; // 坦克上次坐标
-    Dir dir; // 移动方向
+    public Dir dir; // 移动方向
     private final static int SPEED = 10; // 坦克速度
     private boolean moving = true; // 是否移动
     public final static int WIDTH = ResourceMgr.goodTankU.getWidth(); // 坦克宽度
@@ -23,6 +28,7 @@ public class Tank extends GameObject {
     private boolean living = true; // 坦克是否存活
     private Group group = Group.BAD; // 游戏分组
     private Random random = new Random();
+    private FireStrategy fs; // 开炮策略
 
     public Tank(int x, int y, Dir dir, Group group) {
         super();
@@ -35,6 +41,8 @@ public class Tank extends GameObject {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
+        this.fs = DefaultFireStrategy.getInstance();
 
         GameModel.getInstance().add(this);
     }
@@ -66,6 +74,16 @@ public class Tank extends GameObject {
                 break;
         }
         move();
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     /**
@@ -164,10 +182,11 @@ public class Tank extends GameObject {
      * 发射炮弹
      */
     public void fire() {
-        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH /2;
-        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT /2;
-
-        GameModel.getInstance().add(new Bullet(bX, bY ,this.dir, this.group));
+        fs.fire(this);
+//        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH /2;
+//        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT /2;
+//
+//        GameModel.getInstance().add(new Bullet(bX, bY ,this.dir, this.group));
     }
 
     /**
