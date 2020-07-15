@@ -22,23 +22,21 @@ public class Tank extends GameObject {
     public Rectangle rect = new Rectangle();
     private boolean living = true; // 坦克是否存活
     private Group group = Group.BAD; // 游戏分组
-    TankFrame tf;
     private Random random = new Random();
 
-    GameModel gm;
-
-    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Tank(int x, int y, Dir dir, Group group) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
 
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
+        GameModel.getInstance().add(this);
     }
 
     /**
@@ -48,7 +46,7 @@ public class Tank extends GameObject {
     public void paint(Graphics g) {
         if(!living) {
             // 坦克处于未存活状态，将该坦克移除
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             return;
         }
         switch (dir) {
@@ -169,7 +167,7 @@ public class Tank extends GameObject {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH /2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT /2;
 
-        gm.add(new Bullet(bX, bY ,this.dir, this.group, gm));
+        GameModel.getInstance().add(new Bullet(bX, bY ,this.dir, this.group));
     }
 
     /**
@@ -184,6 +182,14 @@ public class Tank extends GameObject {
      */
     public void die() {
         this.living = false;
+    }
+
+    /**
+     * 回到上一步的位置
+     */
+    public void back() {
+        this.x = prevX;
+        this.y = prevY;
     }
 
     public Group getGroup() {

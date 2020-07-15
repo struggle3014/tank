@@ -26,15 +26,12 @@ public class Bullet extends GameObject {
     private boolean living = true;
     // 分组
     public Group group = Group.BAD;
-    // TankFrame 引用
-    public GameModel gm;
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel tf) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = tf;
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
@@ -47,7 +44,7 @@ public class Bullet extends GameObject {
      */
     public void paint(Graphics g) {
         if(!living) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             return;
         }
         switch (dir) {

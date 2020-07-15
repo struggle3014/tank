@@ -17,13 +17,6 @@ import java.util.List;
  **/
 public class TankFrame extends Frame {
 
-    GameModel gm = new GameModel();
-
-//    Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, gm); // 坦克
-//    List<Bullet> bullets = new ArrayList<>(); // 子弹容器
-//    List<Tank> enemyTanks = new ArrayList<>(); // 敌方坦克容器
-//    List<Explode> explodes = new ArrayList<>(); // 爆炸容器
-
     static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960; // 像素
 
     public TankFrame() {
@@ -68,7 +61,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
 //        System.out.println("paint...");
-        gm.paint(g);
+        GameModel.getInstance().paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -118,7 +111,7 @@ public class TankFrame extends Frame {
                     break;
                 // 按住 Ctrl 键，发出一颗子弹
                 case KeyEvent.VK_CONTROL:
-                    gm.getMyTank().fire();
+                    GameModel.getInstance().getMyTank().fire();
                     break;
                 default:
                     break;
@@ -130,7 +123,7 @@ public class TankFrame extends Frame {
          * 设置坦克方向
          */
         private void setAppTankDir() {
-            Tank myTank = gm.getMyTank();
+            Tank myTank = GameModel.getInstance().getMyTank();
             if(!bL && !bU && !bR && !bD) {
                 myTank.setMoving(false);
             } else {
